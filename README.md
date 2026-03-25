@@ -1,51 +1,73 @@
-# Gauntlet-System-Validation - Robotic Arm
-The project brings these miraculous inspirations to life by creating a Robotic Hand that mimics natural human movements through a combination of Arduino R3 and C++ to control specific movements. This robotic hand is controlled by flex sensors worn on a glove, translating finger movements into servo-motor-driven articulation.
+# Gauntlet System Validation — Flex-Sensor Robotic Hand
 
-# Introduction
+A wearable-controlled robotic hand that translates live finger movements into servo-actuated articulation, built on Arduino Uno with a custom C++ control loop and PID feedback.
 
-This repository showcases a flex sensor-controlled robotic hand, inspired by iconic cinematic moments from the Marvel universe. Drawing creative energy from scenes like:
+---
 
-**Shang-Chi**: Father vs. Son's epic battle with the 10 Rings where Shag-Chi steals the rings from and power from his father, 
+## Overview
 
-**Avengers: Endgame**: Thanos wielding the Infinity Gauntlet in the fight against Iron Man withholding all infinity stones,
+The Gauntlet System uses flex sensors embedded in a glove to capture finger bend angles in real time. An Arduino Uno reads those analog signals, applies PID control, and drives five servo motors that pull fishing line tendons to articulate a 3D-printed hand. Elastic cord returns each finger to its neutral position when tension is released.
 
-**Black Panther**: The "I'm not dead" scene, symbolizes resilience and strength
+---
 
-**Avengers**: Age of Ultron: The humorous yet profound team effort to lift Thor's Mjolnir (No one is able to lift Thor's hammer).
+## Hardware
 
-# Hardware
+| Component | Spec / Role |
+|---|---|
+| Arduino Uno | Microcontroller — UART, I2C, SPI |
+| Flex Sensors (×5) | 2.2 in — analog bend detection per finger |
+| Servo Motors (×5) | Finger actuation via tendon pull |
+| Resistors (×5) | 10 kΩ pull-down — stabilizes ADC readings |
+| Fishing Line | Tendons — transmits servo torque to finger joints |
+| Elastic Cord | Return springs — restores fingers to neutral |
+| Glove | Wearable sensor mount |
+| 3D-Printed Arm | Custom chassis housing servos and routing channels |
 
-**Arduino Uno**: UART, I2C, SPI
+---
 
-**2.2-inch Flex Sensors**: To detect finger movements and translate them into electrical signals.
+## How It Works
 
-**Servo Motors**: To actuate the fingers of the robotic hand.
+1. **Sense** — Flex sensors form a voltage divider with 10 kΩ resistors; bend angle maps to an analog voltage read by the Arduino ADC.
+2. **Process** — A PID controller computes motor commands from the error between target and measured finger position.
+3. **Actuate** — PWM signals drive servos; fishing-line tendons curl the fingers while elastic cord provides passive extension.
 
-**10k Ohm Resistors**: As pull-down resistors for stabilizing sensor readings.
+---
 
- **Fishing Strings**: Acting as tendons to pull the robotic fingers.
- 
- **Elastic Rope**: Providing tension for returning fingers to their original positions.
- 
-**Glove**: A wearable interface for capturing the user’s movements.
+## Software
 
-**3D-Printed Arm Model**: To house the servos and mimic a realistic robotic arm.
+- **Language**: C++ (Arduino)
+- **Control**: PID loop — tunable `Kp`, `Ki`, `Kd` constants per channel
+- **Communication**: Serial monitor output for live sensor debugging
 
-# Function
+---
 
-- The flex sensors detect bending motion from the user’s fingers.
-- 
-- The Arduino interprets these readings sends signals to the servo motors, and utilizes PID to control the specific movements.
-- 
-- The servos pull on fishing strings to articulate the robotic fingers, while elastic ropes ensure the fingers return to their neutral position.
-- 
-- This setup replicates human-like finger movements with precision and realism, similar to the world of MCU, where Thanos is the main character.
-  
-# Purpose of this project
+## Getting Started
 
-This project celebrates the themes of strength, resilience, teamwork, and ingenuity, all central to the cinematic scenes it’s inspired by in the Embedded World. It combines engineering with creativity to bridge the gap between fantasy and reality. The power between the communication between hardware and software CAN pose many possible problems in the world that can be interpreted the proper way through the power of the Marvel Universe. 
+### Requirements
+- Arduino IDE ≥ 2.0 or PlatformIO
+- Standard Arduino libraries (no external dependencies)
 
-Feel free to contribute, modify, and build upon this project to take it to new heights!
+### Flash
+```bash
+# Clone the repo
+git clone https://github.com/<your-username>/gauntlet-system-validation.git
+
+# Open in Arduino IDE, select Board: Arduino Uno, then Upload
+```
+
+### Tuning PID
+
+Each finger's PID constants are defined at the top of `main.cpp`:
+```cpp
+float Kp = 1.2, Ki = 0.01, Kd = 0.05;  // adjust per servo channel
+```
+
+Increase `Kp` for faster response; reduce if oscillation occurs.
+
+---
+
+## Contributing
+
+Pull requests are welcome. For significant changes, open an issue first to discuss scope. Please keep commits focused and descriptive.
 
 ![Thanos](Thanos.jpg)
-
