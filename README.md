@@ -1,4 +1,4 @@
-# Gauntlet System Validation — Flex-Sensor Robotic Hand
+# Gauntlet System Validation: Flex-Sensor Robotic Hand
 
 A wearable-controlled robotic hand that translates live finger movements into servo-actuated articulation, built on Arduino Uno with a custom C++ control loop and PID feedback.
 
@@ -50,7 +50,7 @@ The Gauntlet System uses flex sensors embedded in a glove to capture finger bend
 ### Flash
 ```bash
 # Clone the repo
-git clone https://github.com/<your-username>/gauntlet-system-validation.git
+git clone https://github.com/mervinnguyen/gauntlet-system-validation.git
 
 # Open in Arduino IDE, select Board: Arduino Uno, then Upload
 ```
